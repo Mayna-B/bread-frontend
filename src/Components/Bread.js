@@ -19,7 +19,8 @@ function Bread() {
 
     return (
         <div>
-            BREAD
+            <h1>{bread.name}</h1>
+            <img src={bread.image} alt={bread.name} height={300} />
         </div>
     )
 }
