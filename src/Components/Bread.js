@@ -20,6 +20,7 @@ function Bread() {
     return (
         <div>
             <h1>{bread.name}</h1>
+            <p>Has Gluten: {bread.hasGluten}</p>
             <img src={bread.image} alt={bread.name} height={300} />
         </div>
     )
