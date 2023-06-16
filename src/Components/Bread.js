@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Bread() {
-    const [bread, setBread] = useState({})
+    const navigate = useNavigate()
+
+    const [bread, setBread] = useState(null)
 
     const { id } = useParams()
     
@@ -17,11 +19,29 @@ function Bread() {
         fetchData()
     }, [id])
 
+    const deleteBread = async () => {
+        const URL = `${process.env.REACT_APP_BACKEND_URI}/breads/${id}`
+        const response = await fetch(URL, {
+            method: 'DELETE'
+        })
+        if (response.status !==204) console.log('error') // add error handling later    
+    }
+
+     const display = bread && (
+            <div>
+                <h1>{bread.name}</h1>
+                <p>Has Gluten: {bread.hasGluten.toString()}</p>
+                <img src={bread.image} alt={bread.name} height={300} />
+                <div>
+                <button onClick={() => navigate(`/bread/update/${id}`)}>Edit</button>
+                <button onClick={deleteBread}>Delete</button>
+                </div>
+            </div>
+        )
+
     return (
         <div>
-            <h1>{bread.name}</h1>
-            <p>Has Gluten: {bread.hasGluten}</p>
-            <img src={bread.image} alt={bread.name} height={300} />
+            {display}
         </div>
     )
 }
